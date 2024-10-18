@@ -32,6 +32,8 @@ sudo apt -y install \
 ```
 
 ```bash
-source ~/
-
+cd ..
+source ~/ubuntu22_jazzy_ws/install/setup.bash
 ```
+
+* Delete ```build``` folder to save disk space: ```sudo rm -rf build/```
