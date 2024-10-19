@@ -14,16 +14,16 @@ sudo apt-get install python3-vcstool python3-colcon-common-extensions git
 * Populate the src folder with ```Gazebo Harmonic``` packages
 
 ```bash
-cd src/
-curl -O https://raw.githubusercontent.com/gazebo-tooling/gazebodistro/master/collection-harmonic.yaml
-vcs import < collection-harmonic.yaml
+vcs import src < collection-harmonic.yaml
 ```
+
 
 * Source a ROS 2 Humble/Jazzy workspace. In this example, I am using a ROS 2 Jazzy built from source
 
 * Install all dependencies
 
 ```bash
+cd src
 sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 sudo apt-get update
@@ -34,6 +34,19 @@ sudo apt -y install \
 ```bash
 cd ..
 source ~/ubuntu22_jazzy_ws/install/setup.bash
+colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
+```
+
+* Clone gz_vendor and other related packages
+
+```bash
+vcs import src < project.repos --recursive
+rosdep install -r --from-paths src --rosdistro jazzy -i -y
+source ~/ubuntu22_jazzy_ws/install/setup.bash
+source ./install/setup.bash
+colcon build --packages-select orocos_kdl --merge-install
+source ./install/setup.bash
+colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
 ```
 
 * Delete ```build``` folder to save disk space: ```sudo rm -rf build/```
