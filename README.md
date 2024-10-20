@@ -23,10 +23,10 @@ vcs import src < collection-harmonic.yaml
 * Install all dependencies
 
 ```bash
-cd src
 sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 sudo apt-get update
+cd src/
 sudo apt -y install \
   $(sort -u $(find . -iname 'packages-'`lsb_release -cs`'.apt' -o -iname 'packages.apt' | grep -v '/\.git/') | sed '/gz\|sdf/d' | tr '\n' ' ')
 ```
@@ -37,16 +37,21 @@ source ~/ubuntu22_jazzy_ws/install/setup.bash
 colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
 ```
 
-* Clone gz_vendor and other related packages
+* Delete ```build``` folder to save disk space: ```sudo rm -rf build/```
+
+* Test to make sure Gazebo is loaded correctly
 
 ```bash
-vcs import src < project.repos --recursive
-rosdep install -r --from-paths src --rosdistro jazzy -i -y
-source ~/ubuntu22_jazzy_ws/install/setup.bash
-source ./install/setup.bash
-colcon build --packages-select orocos_kdl --merge-install
-source ./install/setup.bash
-colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
+gz sim -v 4 empty.sdf
 ```
 
-* Delete ```build``` folder to save disk space: ```sudo rm -rf build/```
+If you see a blank screen with the error ```[GUI] [Dbg] [Gui.cc:343] GUI requesting list of world names. The server may be busy downloading resources. Please be patient``` as discussed [here](https://gazebosim.org/docs/latest/troubleshooting/) follow the steps below
+
+* If issue:
+
+```bash
+sudo ufw allow in proto udp to 224.0.0.0/4
+sudo ufw allow in proto udp from 224.0.0.0/4
+gz sim -v 4 empty.sdf
+```
+
