@@ -39,11 +39,12 @@ source ~/ubuntu22_jazzy_ws/install/setup.bash
 colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
 ```
 
-* Delete ```build``` folder to save disk space: ```sudo rm -rf build/```
-
 * Test to make sure Gazebo is loaded correctly
 
 ```bash
+source ./install/setup.bash
+sudo ufw allow in proto udp to 224.0.0.0/4
+sudo ufw allow in proto udp from 224.0.0.0/4
 gz sim -v 4 empty.sdf
 ```
 
