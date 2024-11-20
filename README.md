@@ -6,18 +6,15 @@ This workspace is setup in two steps. First we setup the Gazebo Harmonic files a
 
 ## Setup Gazebo Harmonic
 
-* Install ```vcstool```, ```colcon``` and ```git```
+* Make sure you have ```vcstool```, ```colcon``` and ```git```.
+
+
+* Download this repo in `\home` and populate the src folder with ```Gazebo Harmonic``` packages
 
 ```bash
-sudo sh -c 'echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros2-latest.list'
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-sudo apt-get update
-sudo apt-get install python3-vcstool python3-colcon-common-extensions git
-```
-
-* Populate the src folder with ```Gazebo Harmonic``` packages
-
-```bash
+cd ~
+git clone https://github.com/Mechazo11/gazebo_harmonic_ws.git
+cd ~/gazebo_harmonic_ws
 vcs import src < collection-harmonic.yaml
 ```
 
