@@ -2,6 +2,8 @@
 
 A ROS 2 workspace containing all the packages necesasry to build and install ```Gazebo Harmonic``` from source. Based on the official tutorial : https://gazebosim.org/docs/harmonic/install_ubuntu_src/
 
+This workspace is setup in two steps. First we setup the Gazebo Harmonic files and then install ROS 2 packages that enables interfacing various sections of Gazebo Harmonic with ROS 2
+
 ## Setup Gazebo Harmonic
 
 * Install ```vcstool```, ```colcon``` and ```git```
@@ -48,16 +50,6 @@ sudo ufw allow in proto udp from 224.0.0.0/4
 gz sim -v 4 empty.sdf
 ```
 
-If you see a blank screen with the error ```[GUI] [Dbg] [Gui.cc:343] GUI requesting list of world names. The server may be busy downloading resources. Please be patient``` as discussed [here](https://gazebosim.org/docs/latest/troubleshooting/) follow the steps below
-
-* If issue persists
-
-```bash
-sudo ufw allow in proto udp to 224.0.0.0/4
-sudo ufw allow in proto udp from 224.0.0.0/4
-gz sim -v 4 empty.sdf
-```
-
 ## Setup gz vendors to connect with ROS 2
 
 ```bash
@@ -69,4 +61,18 @@ colcon build --packages-select orocos_kdl --merge-install
 source ./install/setup.bash
 colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
 ```
+
+---
+
+If you see a blank screen with the error ```[GUI] [Dbg] [Gui.cc:343] GUI requesting list of world names. The server may be busy downloading resources. Please be patient``` as discussed [here](https://gazebosim.org/docs/latest/troubleshooting/) follow the steps below
+
+* If issue persists
+
+```bash
+sudo ufw allow in proto udp to 224.0.0.0/4
+sudo ufw allow in proto udp from 224.0.0.0/4
+gz sim -v 4 empty.sdf
+```
+
+
 
