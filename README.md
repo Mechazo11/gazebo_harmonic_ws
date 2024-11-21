@@ -32,6 +32,8 @@ sudo apt -y install \
   $(sort -u $(find . -iname 'packages-'`lsb_release -cs`'.apt' -o -iname 'packages.apt' | grep -v '/\.git/') | sed '/gz\|sdf/d' | tr '\n' ' ')
 ```
 
+* Build the workspace
+
 ```bash
 cd ..
 source ~/ubuntu22_jazzy_ws/install/setup.bash
