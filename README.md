@@ -32,6 +32,8 @@ sudo apt -y install \
   $(sort -u $(find . -iname 'packages-'`lsb_release -cs`'.apt' -o -iname 'packages.apt' | grep -v '/\.git/') | sed '/gz\|sdf/d' | tr '\n' ' ')
 ```
 
+* Build the workspace
+
 ```bash
 cd ..
 source ~/ubuntu22_jazzy_ws/install/setup.bash
@@ -42,32 +44,10 @@ colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
 
 ```bash
 source ./install/setup.bash
-gz sim -v 4 empty.sdf
-```
-
-If you see a blank screen with the error ```[GUI] [Dbg] [Gui.cc:343] GUI requesting list of world names. The server may be busy downloading resources. Please be patient``` as discussed [here](https://gazebosim.org/docs/latest/troubleshooting/) follow the steps below
-
-* If issue persists
-
-```bash
 sudo ufw allow in proto udp to 224.0.0.0/4
 sudo ufw allow in proto udp from 224.0.0.0/4
 gz sim -v 4 empty.sdf
 ```
-
-## Setup gz vendors to connect with ROS 2
-
-```bash
-vcs import src < gz_jazzy.repos --recursive
-rosdep install -r --from-paths src --rosdistro jazzy -i -y
-source ~/ubuntu22_jazzy_ws/install/setup.bash
-source ./install/setup.bash
-colcon build --packages-select orocos_kdl --merge-install
-source ./install/setup.bash
-colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
-```
-
----
 
 
 
