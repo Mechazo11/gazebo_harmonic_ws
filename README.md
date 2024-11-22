@@ -1,15 +1,13 @@
 # Gazebo Harmonic workspace
 
-A ROS 2 workspace containing all the packages necesasry to build and install ```Gazebo Harmonic``` from source. Based on the official tutorial : https://gazebosim.org/docs/harmonic/install_ubuntu_src/
-
-This workspace is setup in two steps. First we setup the Gazebo Harmonic files and then install ROS 2 packages that enables interfacing various sections of Gazebo Harmonic with ROS 2
+A ROS 2 workspace containing all the packages necesasry to build and install ```Gazebo Harmonic``` from source along with all pertinent ```vendor``` packages for interfacing with ROS 2. Build instructions are based on the official tutorial : https://gazebosim.org/docs/harmonic/install_ubuntu_src/
 
 ## Setup Gazebo Harmonic
 
 * Make sure you have ```vcstool```, ```colcon``` and ```git```.
 
 
-* Download this repo in `\home` and populate the src folder with ```Gazebo Harmonic``` packages
+* Download this repo in the `/home` directory and populate the `src` folder with ```Gazebo Harmonic``` packages
 
 ```bash
 cd ~
@@ -19,7 +17,7 @@ vcs import src < collection-harmonic.yaml
 ```
 
 
-* Source a ROS 2 Humble/Jazzy workspace. In this example, I am using a ROS 2 Jazzy built from source
+* Source a ROS 2 Humble/Jazzy workspace. In this example, I am using a ROS 2 Jazzy built from source in Ubuntu 22.04
 
 * Install all dependencies
 
@@ -37,10 +35,17 @@ sudo apt -y install \
 ```bash
 cd ..
 source ~/ubuntu22_jazzy_ws/install/setup.bash
-colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
+colcon build --cmake-args -DBUILD_TESTING=OFF -DCMAKE_CXX_FLAGS="-w" --merge-install
 ```
 
-* Test to make sure Gazebo is loaded correctly
+* Test if gazebo works correctly
+
+```bash
+source ./install/setup.bash
+gz sim -v 4 empty.sdf
+```
+
+* If no output is seen or an error message stating ```looking for worlds```, then perform the following
 
 ```bash
 source ./install/setup.bash
@@ -48,8 +53,3 @@ sudo ufw allow in proto udp to 224.0.0.0/4
 sudo ufw allow in proto udp from 224.0.0.0/4
 gz sim -v 4 empty.sdf
 ```
-
-
-
-
-
