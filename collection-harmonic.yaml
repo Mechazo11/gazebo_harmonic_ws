@@ -124,8 +124,5 @@ repositories:
     type: git
     url: https://github.com/gazebo-release/gz_sensors_vendor.git
     version: jazzy # Jazzy branch required to be compatible with Harmonic
-  gazebo-release/gz_ros2_control:
-    type: git
-    url: https://github.com/ros-controls/gz_ros2_control.git
-    version: jazzy # Jazzy branch required to be compatible with Harmonic
+  
   
