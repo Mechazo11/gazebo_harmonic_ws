@@ -1,6 +1,6 @@
 # Gazebo Harmonic workspace
 
-A ROS 2 workspace containing all the packages necesasry to build and install ```Gazebo Harmonic``` from source along with all pertinent ```vendor``` packages for interfacing with ROS 2. Build instructions are based on the official tutorial : https://gazebosim.org/docs/harmonic/install_ubuntu_src/
+A ROS 2 workspace containing all the packages necesasry to build and install ```Gazebo Harmonic``` from source. Build instructions are based on the official tutorial : https://gazebosim.org/docs/harmonic/install_ubuntu_src/. Please note all **vendor** packages i.e. ```gz_transport_vendor``` must be in the base workspace.
 
 ## Setup Gazebo Harmonic
 
@@ -53,3 +53,5 @@ sudo ufw allow in proto udp to 224.0.0.0/4
 sudo ufw allow in proto udp from 224.0.0.0/4
 gz sim -v 4 empty.sdf
 ```
+
+* OPTIONAL: Delete `build` folder to save on space.
